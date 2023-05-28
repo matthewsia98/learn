@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ehotels_data.Models.HotelChain>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<table class="table table-striped table-bordered text-center">
+    <thead>
+        <tr>
+            <th>Hotel Chain Name</th>
+            <th>Number of Hotels</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var chain in Model)
+        {
+                <tr>
+                    <td>@chain.Name</td>
+                    <td>@chain.NumHotels</td>
+                </tr>
+        }
+    </tbody>
+</table>
