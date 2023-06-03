@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 class Burger(ABC):
     @property
+    @abstractmethod
     def ingredients(self):
         pass
 
