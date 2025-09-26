@@ -1,4 +1,5 @@
-﻿using Expressions.Examples;
+﻿using System.Linq.Expressions;
+using Expressions.Examples;
 using Expressions.Models;
 
 var p = new Person
@@ -18,3 +19,6 @@ Examples.Run(p, p => p.Mother.Name);
 
 Examples.Run(p, p => p.Height);
 Examples.Run(p, p => p.Father.Weight);
+
+Examples.Run(p, p => p.Hobbies, (Expression<Func<string, bool>>)(x => x == "reading"));
+Examples.Run(p, p => p.Children, (Expression<Func<Person, bool>>)(x => x.Name == "alice"));

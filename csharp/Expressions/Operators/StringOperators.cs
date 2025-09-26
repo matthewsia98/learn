@@ -57,8 +57,8 @@ public class InOperator
 
     public Expression GetExpression()
     {
-        var methodInfo = typeof(PList<string>).GetMethod(
-            nameof(PList<string>.Contains),
+        var methodInfo = typeof(ICollection<string>).GetMethod(
+            nameof(ICollection<string>.Contains),
             [typeof(string)]
         );
         return Expression.Call(Expression.Constant(Values), methodInfo, Instance);
