@@ -10,12 +10,11 @@ var p = new Person
     Hobbies = ["reading", "coding"],
     Mother = new Person { Name = "susan" },
     Father = new Person { Name = "john" },
-    Children =
-    [
-        new Person { Name = "alice" },
-        new Person { Name = "bob" }
-    ]
+    Children = [new Person { Name = "alice" }, new Person { Name = "bob" }]
 };
 
-StringExamples.Run(p, p => p.Name);
-StringExamples.Run(p, p => p.Mother.Name);
+Examples.Run(p, p => p.Name);
+Examples.Run(p, p => p.Mother.Name);
+
+Examples.Run(p, p => p.Height);
+Examples.Run(p, p => p.Father.Weight);

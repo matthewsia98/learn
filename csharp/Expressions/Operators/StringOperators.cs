@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
+using Expressions.Models;
 
-namespace Expressions.Operators;
+namespace Expressions.Operators.String;
 
 public class EqualsOperator
 {
@@ -13,24 +14,6 @@ public class EqualsOperator
     }
 }
 
-public class NotEqualsOperator
-{
-    public Expression Instance { get; set; }
-    public string Value { get; set; }
-    public Expression GetExpression()
-    {
-        return new NotOperator
-        {
-            Instance = new EqualsOperator
-            {
-                Instance = Instance,
-                Value = Value
-            }.GetExpression()
-        }.GetExpression();
-    }
-}
-
-
 public class ContainsOperator
 {
     public Expression Instance { get; set; }
@@ -40,24 +23,6 @@ public class ContainsOperator
     {
         var methodInfo = typeof(string).GetMethod(nameof(string.Contains), [typeof(string)]);
         return Expression.Call(Instance, methodInfo, Expression.Constant(Value));
-    }
-}
-
-
-public class NotContainsOperator
-{
-    public Expression Instance { get; set; }
-    public string Value { get; set; }
-    public Expression GetExpression()
-    {
-        return new NotOperator
-        {
-            Instance = new ContainsOperator
-            {
-                Instance = Instance,
-                Value = Value
-            }.GetExpression()
-        }.GetExpression();
     }
 }
 
@@ -73,23 +38,6 @@ public class StartsWithOperator
     }
 }
 
-public class NotStartsWithOperator
-{
-    public Expression Instance { get; set; }
-    public string Value { get; set; }
-    public Expression GetExpression()
-    {
-        return new NotOperator
-        {
-            Instance = new StartsWithOperator
-            {
-                Instance = Instance,
-                Value = Value
-            }.GetExpression()
-        }.GetExpression();
-    }
-}
-
 public class EndsWithOperator
 {
     public Expression Instance { get; set; }
@@ -102,48 +50,17 @@ public class EndsWithOperator
     }
 }
 
-public class NotEndsWithOperator
-{
-    public Expression Instance { get; set; }
-    public string Value { get; set; }
-    public Expression GetExpression()
-    {
-        return new NotOperator
-        {
-            Instance = new EndsWithOperator
-            {
-                Instance = Instance,
-                Value = Value
-            }.GetExpression()
-        }.GetExpression();
-    }
-}
-
 public class InOperator
 {
     public Expression Instance { get; set; }
-    public ICollection<string> Values { get; set; }
+    public PList<string> Values { get; set; }
 
     public Expression GetExpression()
     {
-        var methodInfo = typeof(ICollection<string>).GetMethod(nameof(ICollection<string>.Contains), [typeof(string)]);
+        var methodInfo = typeof(PList<string>).GetMethod(
+            nameof(PList<string>.Contains),
+            [typeof(string)]
+        );
         return Expression.Call(Expression.Constant(Values), methodInfo, Instance);
-    }
-}
-
-public class NotInOperator
-{
-    public Expression Instance { get; set; }
-    public ICollection<string> Values { get; set; }
-    public Expression GetExpression()
-    {
-        return new NotOperator
-        {
-            Instance = new InOperator
-            {
-                Instance = Instance,
-                Values = Values
-            }.GetExpression()
-        }.GetExpression();
     }
 }
