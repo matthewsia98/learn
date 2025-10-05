@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 
 using Server;
 
@@ -25,6 +24,7 @@ app.MapGet("/login", Login);
 app.MapGet("/logout", Logout);
 app.MapGet("/user", GetUser);
 app.MapGet("/chars", GetChars);
+app.MapGet("/words", GetWords);
 app.MapGet("/people", GetPeople);
 app.MapGet("/people-json", GetPeopleJson);
 
@@ -47,7 +47,7 @@ string GetUser(IHttpContextAccessor httpContextAccessor)
     return httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? "Not logged in";
 }
 
-[Authorize]
+//[Authorize]
 async IAsyncEnumerable<char> GetChars(IHttpContextAccessor httpContextAccessor)
 {
     var user = GetUser(httpContextAccessor);
@@ -59,7 +59,17 @@ async IAsyncEnumerable<char> GetChars(IHttpContextAccessor httpContextAccessor)
     }
 }
 
-[Authorize]
+async IAsyncEnumerable<string> GetWords()
+{
+    var words = new List<string> { "Hello", "from", "the", "other", "side", "of", "the", "streaming", "world", "!" };
+    foreach (var word in words)
+    {
+        await Task.Delay(1000);
+        yield return word;
+    }
+}
+
+//[Authorize]
 async IAsyncEnumerable<Person> GetPeople()
 {
     List<Person> people = [
@@ -78,7 +88,7 @@ async IAsyncEnumerable<Person> GetPeople()
 }
 
 
-[Authorize]
+//[Authorize]
 async Task GetPeopleJson(IHttpContextAccessor httpContextAccessor)
 {
     List<Person> people = [
