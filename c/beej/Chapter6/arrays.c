@@ -10,6 +10,15 @@ int main(void)
     printf("sizeof f[0] = %zu\n", sizeof f[0]);
     printf("sizeof f / sizeof f[0] = %zu\n", sizeof f / sizeof f[0]);
 
+    // shorthand for float *first = &f[0]
+    // address of first element
+    float *first = f;
+    printf("address of f    = %p\n", (void *)&f);
+    printf("address of f[0] = %p\n", (void *)first);
+
+    // prints f[0]
+    printf("*first = %f\n", *first);
+
     foo(f);
 
     for (int i = 0; i < 3; i++) {
